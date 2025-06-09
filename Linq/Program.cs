@@ -34,7 +34,7 @@ namespace Linq
             var res2 = numbers.CustomWhere(x => x < 5);
 
 
-            var res3 = persons.Where(p => p.Age > 30 && p.Name.Length > 2);
+            var res3 = persons.Where(p => p.Age > 30 /*&& p.Name.Length > 2*/);
 
             //...
 
@@ -45,11 +45,31 @@ namespace Linq
 
             var newRes = res3.Select(p => p.Age);
 
+
+            var res4 = persons.Where(IsOver30)
+                              .Select(p => new PersonDto
+                              {
+                                  FirstName = p.Name,
+                                  NamesLength = p.Name.Length
+                              }).ToList();
+
+
+            foreach (var person in res4)
+            {
+                Console.WriteLine(person.NamesLength);
+                Console.WriteLine(person.GetType().Name);
+            }
+
         }
 
         private static void Do(Person p)
         {
             //.....
+        }
+
+        private static bool IsOver30(Person p)
+        {
+            return p.Age > 30;
         }
 
         private static List<Person> GetPersons()
