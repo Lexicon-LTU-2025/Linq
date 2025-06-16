@@ -20,7 +20,13 @@ namespace Linq
             //persons.ForEach(p => Console.WriteLine(p));
             //persons.ForEach(Do);
             //persons.ForEach(p => Do(p));
-
+            Person? p = persons[0];
+            var e = p switch
+            {
+                not null and { Age: > 12 } => true,
+                _ => false
+            };
+           
 
             var res = persons.CustomWhere(p => p.Age > 30)
                              .Where(p => p.Name.Length > 0);
